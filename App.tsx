@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import Login from "./src/screen/Account/Login";
+import Home from "./src/screen/Home";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -48,6 +49,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
