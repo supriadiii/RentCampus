@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,11 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.supriadii.RentCampus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "jsEngine": "jsc"
+    "jsEngine": "jsc",
+    "extra": {
+      "eas": {
+        "projectId": "d7163733-4cd5-4b13-b0e9-94bfad15148d"
+      }
+    }
   }
 }

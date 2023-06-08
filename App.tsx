@@ -1,12 +1,18 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import Login from "./src/screen/Account/Login";
+import Register from "./src/screen/Account/Register";
 import Home from "./src/screen/Home";
+import Notifikasi from "./src/screen/Notifikasi";
+import Profile from "./src/screen/Profile";
+import FromAddRent from "./src/screen/Rent/FromAddRent";
+import TabNavigation from "./src/screen/TabNavigation";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,30 +35,57 @@ const fetchFonts = () => {
   });
 };
 
-export default function App() {
+export default function App(props: any) {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const [user, setUser] = useState<any>({});
   useEffect(() => {
-    async function loadFonts() {
+    const loadFonts = async () => {
       await fetchFonts();
       setFontLoaded(true);
-    }
+    };
+
+    const checkSession = async () => {
+      try {
+        const data = await AsyncStorage.getItem("userData");
+        console.log(data); // Perbarui kunci menjadi "userData"
+        if (data !== null) {
+          setUser(JSON.parse(data));
+          // return data;
+        } else {
+          setUser("undefined");
+        }
+      } catch (error) {
+        console.error("Error retrieving user session", error);
+      }
+    };
+
     loadFonts();
+    checkSession();
   }, []);
 
   if (!fontLoaded) {
     return <Text>Loading...</Text>;
   }
+
   const Stack = createNativeStackNavigator();
+  console.log("data user di app", user);
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          initialRouteName={user !== "undefined" ? "TabNavigator" : "Login"}
+          screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="TabNavigation" component={TabNavigation} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Notifikasi" component={Notifikasi} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="FromAddRent" component={FromAddRent} />
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
+    </>
   );
 }
 

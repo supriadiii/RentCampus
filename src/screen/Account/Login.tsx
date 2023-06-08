@@ -5,8 +5,8 @@ import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from "reac
 import ModalNim from "./componenLogin/ModalNim";
 
 const Login = (props: any) => {
-  const [nimInput, setNimInput] = useState("Nomor Induk Mahasiswa");
-  const [passwordInput, setpasswordInput] = useState("password");
+  const [nimInput, setNimInput] = useState("");
+  const [passwordInput, setpasswordInput] = useState("");
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
   const nimUnimed = parseInt(nimInput, 10);
@@ -40,12 +40,13 @@ const Login = (props: any) => {
       .then(async (data) => {
         console.log("=====", data);
         if (data !== undefined) {
-          await AsyncStorage.setItem("session", data.data.token);
-          await AsyncStorage.setItem("userData", data.data);
+          await AsyncStorage.setItem("userData", JSON.stringify(data.data)); // Perbarui kunci menjadi "userData"
           setUser(data);
-          // props.navigation.replace("Home");
+          props.navigation.replace("TabNavigation");
+          return data;
         }
       })
+
       .catch((error) => {
         // Handle error saat menghubungi API
         console.log("sdasdasdsadwsd");
@@ -121,7 +122,8 @@ const Login = (props: any) => {
               }}>
               <Image source={require("../../../assets/login/iconPeople.png")} />
               <TextInput
-                // autoComplete="Nomor induk mahasiswa",
+                placeholder="Nomor Induk Mahasiswa"
+                keyboardType="numeric"
                 onChangeText={(text) => setNimInput(text)}
                 value={nimInput}
                 // secureTextEntry={true}
@@ -137,7 +139,7 @@ const Login = (props: any) => {
               }}>
               <Image source={require("../../../assets/login/iconPassword.png")} />
               <TextInput
-                autoComplete="password"
+                placeholder="Password"
                 secureTextEntry={true}
                 onChangeText={(text) => setpasswordInput(text)}
                 value={passwordInput}></TextInput>
@@ -156,7 +158,7 @@ const Login = (props: any) => {
           </TouchableOpacity>
           <View style={styles.registerContainer}>
             <Text style={styles.registerText}>Belum memiliki akun? </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Register")}>
               <Text style={styles.registerButtonText}>Daftar</Text>
             </TouchableOpacity>
           </View>
