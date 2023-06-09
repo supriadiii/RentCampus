@@ -8,6 +8,7 @@ import { StyleSheet, View, Text } from "react-native";
 
 import Login from "./src/screen/Account/Login";
 import Register from "./src/screen/Account/Register";
+import Detail from "./src/screen/Detail";
 import Home from "./src/screen/Home";
 import Notifikasi from "./src/screen/Notifikasi";
 import Profile from "./src/screen/Profile";
@@ -83,6 +84,7 @@ export default function App(props: any) {
           <Stack.Screen name="Notifikasi" component={Notifikasi} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="FromAddRent" component={FromAddRent} />
+          <Stack.Screen name="Detail" component={Detail} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

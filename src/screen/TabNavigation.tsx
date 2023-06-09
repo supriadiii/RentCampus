@@ -36,13 +36,13 @@ const TabNavigation = (props: any) => {
           tabBarIcon: HomeMenu,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Voucher"
         children={() => <Notifikasi props={props} />}
         options={{
           tabBarIcon: NotificationMenu,
         }}
-      />
+      /> */}
       {/* <Tab.Screen
         name="Bookings"
         children={() => <BookingsScreen props={props} />}
